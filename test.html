@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Französisch Konjugations-Trainer</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .verb-input {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.97rem;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        .verb-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        .verb-input.correct {
+            border-color: #2ecc71;
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+        }
+        .verb-input.wrong {
+            border-color: #e74c3c;
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+        }
+        .trainer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-check { background: #2ecc71; color: white; }
+        .btn-check:hover { background: #28b86a; }
+        .btn-solve { background: #3498db; color: white; }
+        .btn-solve:hover { background: #2980b9; }
+        .btn-reset { background: #95a5a6; color: white; }
+        .btn-reset:hover { background: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="verb-title">Französisch Konjugations-Trainer</h1>
+    </header>
+
+    <div class="toolbar">
+        <label for="verb-select">Verb trainieren:</label>
+        <select id="verb-select" aria-label="Verb auswählen"></select>
+    </div>
+
+    <div class="quickstart" aria-label="Modus-Auswahl">
+        <label class="mode-label mode-alle"><input type="checkbox" data-mode="alle" checked> Alle</label>
+        <label class="mode-label mode-indicatif"><input type="checkbox" data-mode="Indicatif"> Indicatif</label>
+        <label class="mode-label mode-subjonctif"><input type="checkbox" data-mode="Subjonctif"> Subjonctif</label>
+        <label class="mode-label mode-conditionnel"><input type="checkbox" data-mode="Conditionnel"> Conditionnel</label>
+        <label class="mode-label mode-imperatif"><input type="checkbox" data-mode="Impératif"> Impératif</label>
+        <label class="mode-label mode-participe"><input type="checkbox" data-mode="Participe"> Participe</label>
+    </div>
+    <div class="subbuttons" id="tense-buttons" aria-label="Zeitform-Auswahl"></div>
+
+    <div id="error-msg"></div>
+
+    <div class="info-row">
+        <div class="info-card">
+            <strong>Infinitif</strong>
+            <div id="verb-infinitiv">–</div>
+        </div>
+        <div class="info-card">
+            <strong>Auxiliaire</strong>
+            <div id="verb-auxiliaire">–</div>
+        </div>
+        <div class="info-card">
+            <strong>Groupe</strong>
+            <div id="verb-groupe">–</div>
+        </div>
+    </div>
+
+    <div class="trainer-controls">
+        <button id="btn-check" class="btn btn-check">Überprüfen</button>
+        <button id="btn-solve" class="btn btn-solve">Lösung anzeigen</button>
+        <button id="btn-reset" class="btn btn-reset">Zurücksetzen</button>
+    </div>
+
+    <div class="grid" id="conjugation-grid"></div>
+
+    <script src="./js/verbs.js"></script>
+    <script src="./js/test.js"></script>
+</body>
+</html>
