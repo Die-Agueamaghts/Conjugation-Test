@@ -190,8 +190,20 @@ table {
     border-top: 1px solid rgba(44, 62, 80, 0.08);
 }
 .card table td {
-    padding: 12px 14px;
+    padding: 10px 12px;
     white-space: normal;
+}
+
+.card table .pronoun {
+    letter-spacing: 0.02em;
+}
+
+.card table .verb-form input {
+    min-height: 34px;
+}
+
+.card table tr {
+    transition: background 0.15s ease;
 }
 .tense-heading td {
     display: flex;

@@ -20,9 +20,11 @@ function init() {
     document.getElementById('btn-check').addEventListener('click', checkAnswers);
     document.getElementById('btn-solve').addEventListener('click', showSolutions);
     document.getElementById('btn-reset').addEventListener('click', resetTrainer);
+    document.getElementById('btn-next-verb').addEventListener('click', showNextVerb);
     document.getElementById('btn-check-bottom').addEventListener('click', checkAnswers);
     document.getElementById('btn-solve-bottom').addEventListener('click', showSolutions);
     document.getElementById('btn-reset-bottom').addEventListener('click', resetTrainer);
+    document.getElementById('btn-next-verb-bottom').addEventListener('click', showNextVerb);
 
     bindGoToTopButton();
 
@@ -38,6 +40,7 @@ function handleVerbChange(verbId) {
             renderConjugation(data);
             updateTenseButtons();
             applyFilters();
+            updateNextVerbButtons();
         })
         .catch(err => {
             errorMsg.style.display = 'block';
@@ -50,6 +53,41 @@ function createOption(verb) {
     option.value = verb.id;
     option.textContent = verb.label;
     return option;
+}
+
+function getNextVerbLabel() {
+    const options = [...verbSelect.options];
+    if (options.length === 0) return 'Nächstes Verb';
+
+    const currentIndex = options.findIndex(option => option.value === verbSelect.value);
+    const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % options.length;
+    const nextOption = options[nextIndex];
+
+    return nextOption ? nextOption.textContent : 'Nächstes Verb';
+}
+
+function updateNextVerbButtons() {
+    const nextVerbLabel = getNextVerbLabel();
+    const label = `Nächstes Verb: ${nextVerbLabel}`;
+
+    const topButton = document.getElementById('btn-next-verb');
+    const bottomButton = document.getElementById('btn-next-verb-bottom');
+
+    if (topButton) topButton.textContent = label;
+    if (bottomButton) bottomButton.textContent = label;
+}
+
+function showNextVerb() {
+    const options = [...verbSelect.options];
+    if (options.length === 0) return;
+
+    const currentIndex = options.findIndex(option => option.value === verbSelect.value);
+    const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % options.length;
+    const nextValue = options[nextIndex].value;
+
+    verbSelect.value = nextValue;
+    handleVerbChange(nextValue);
+    updateNextVerbButtons();
 }
 
 function checkAnswers() {
@@ -71,10 +109,29 @@ function checkAnswers() {
 
 function showSolutions() {
     const inputs = grid.querySelectorAll('.verb-input');
+
     inputs.forEach(input => {
-        input.value = input.dataset.correct;
-        input.classList.remove('wrong');
-        input.classList.add('correct');
+        const wrapper = input.closest('.verb-form');
+        const existingHint = wrapper ? wrapper.querySelector('.solution-hint') : null;
+        if (existingHint) existingHint.remove();
+
+        input.classList.remove('correct', 'wrong');
+
+        const correctForm = input.dataset.correct.trim();
+        const userForm = input.value.trim();
+
+        if (userForm === correctForm) {
+            input.classList.add('correct');
+            return;
+        }
+
+        input.classList.add('wrong');
+        if (wrapper) {
+            const hint = document.createElement('div');
+            hint.className = 'solution-hint wrong';
+            hint.textContent = `Lösung: ${correctForm}`;
+            wrapper.appendChild(hint);
+        }
     });
 }
 
@@ -83,6 +140,12 @@ function resetTrainer() {
     inputs.forEach(input => {
         input.value = '';
         input.classList.remove('correct', 'wrong');
+
+        const wrapper = input.closest('.verb-form');
+        if (wrapper) {
+            const existingHint = wrapper.querySelector('.solution-hint');
+            if (existingHint) existingHint.remove();
+        }
     });
 
     const firstInput = grid.querySelector('.verb-input');
@@ -188,6 +251,9 @@ function bindInputNavigation() {
             element.select();
         }
     };
+
+    const topButtons = document.querySelectorAll('#btn-check, #btn-solve, #btn-reset, #btn-next-verb');
+    const bottomButtons = document.querySelectorAll('#btn-check-bottom, #btn-solve-bottom, #btn-reset-bottom, #btn-next-verb-bottom');
 
     const getButtonSequence = () => {
         const visibleButtons = actionButtons.filter(button => button.offsetParent !== null);
@@ -314,9 +380,6 @@ function bindInputNavigation() {
             }
         });
     });
-
-    const topButtons = document.querySelectorAll('#btn-check, #btn-solve, #btn-reset');
-    const bottomButtons = document.querySelectorAll('#btn-check-bottom, #btn-solve-bottom, #btn-reset-bottom');
 
     [...topButtons].forEach((button, index) => {
         button.tabIndex = index + 1;
