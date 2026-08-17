@@ -20,6 +20,11 @@ function init() {
     document.getElementById('btn-check').addEventListener('click', checkAnswers);
     document.getElementById('btn-solve').addEventListener('click', showSolutions);
     document.getElementById('btn-reset').addEventListener('click', resetTrainer);
+    document.getElementById('btn-check-bottom').addEventListener('click', checkAnswers);
+    document.getElementById('btn-solve-bottom').addEventListener('click', showSolutions);
+    document.getElementById('btn-reset-bottom').addEventListener('click', resetTrainer);
+
+    bindGoToTopButton();
 
     if (verbs.length > 0) {
         verbSelect.value = verbs[0].id;
@@ -79,6 +84,14 @@ function resetTrainer() {
         input.value = '';
         input.classList.remove('correct', 'wrong');
     });
+
+    const firstInput = grid.querySelector('.verb-input');
+    if (firstInput) {
+        setTimeout(() => {
+            firstInput.focus();
+            firstInput.select();
+        }, 50);
+    }
 }
 
 function renderConjugation(data) {
@@ -137,6 +150,180 @@ function renderConjugation(data) {
         }
         grid.appendChild(card);
     }
+
+    bindInputNavigation();
+
+    const firstInput = grid.querySelector('.verb-input');
+    if (firstInput) {
+        setTimeout(() => {
+            firstInput.focus();
+            firstInput.select();
+        }, 50);
+    }
+}
+
+function bindGoToTopButton() {
+    const goToTopButton = document.getElementById('go-to-top-btn');
+    if (!goToTopButton) return;
+
+    const updateGoToTopVisibility = () => {
+        goToTopButton.classList.toggle('show', window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', updateGoToTopVisibility, { passive: true });
+    goToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    updateGoToTopVisibility();
+}
+
+function bindInputNavigation() {
+    const inputs = [...grid.querySelectorAll('.verb-input')];
+    const actionButtons = [...document.querySelectorAll('.btn')];
+
+    const focusAndSelect = (element) => {
+        if (!element) return;
+        element.focus();
+        if (typeof element.select === 'function') {
+            element.select();
+        }
+    };
+
+    const getButtonSequence = () => {
+        const visibleButtons = actionButtons.filter(button => button.offsetParent !== null);
+        return visibleButtons.length ? visibleButtons : actionButtons;
+    };
+
+    const focusCheckButton = () => {
+        const bottomCheckButton = document.getElementById('btn-check-bottom');
+        const topCheckButton = document.getElementById('btn-check');
+        const target = bottomCheckButton || topCheckButton;
+
+        if (target) {
+            focusAndSelect(target);
+        }
+    };
+
+    inputs.forEach((input, index) => {
+        input.addEventListener('focus', () => {
+            inputs.forEach(item => item.classList.remove('active-focus'));
+            input.classList.add('active-focus');
+        });
+
+        input.addEventListener('blur', () => {
+            input.classList.remove('active-focus');
+        });
+
+        input.addEventListener('keydown', (event) => {
+            const currentIndex = inputs.indexOf(input);
+            const visibleInputs = inputs.filter(item => item.offsetParent !== null);
+            const isLastVisibleInput = visibleInputs[visibleInputs.length - 1] === input;
+
+            if ((event.key === 'Enter' || event.key === 'Tab') && !event.shiftKey) {
+                event.preventDefault();
+
+                if (isLastVisibleInput) {
+                    focusCheckButton();
+                    return;
+                }
+
+                const nextInput = visibleInputs[currentIndex + 1] || inputs[currentIndex + 1];
+                if (nextInput) {
+                    focusAndSelect(nextInput);
+                }
+                return;
+            }
+
+            if (event.key === 'Tab' && event.shiftKey) {
+                event.preventDefault();
+                const previousInput = inputs[Math.max(currentIndex - 1, 0)];
+                if (previousInput) {
+                    focusAndSelect(previousInput);
+                }
+                return;
+            }
+
+            if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                event.preventDefault();
+                const nextInput = inputs[Math.min(currentIndex + 1, inputs.length - 1)];
+                if (nextInput) {
+                    focusAndSelect(nextInput);
+                }
+                return;
+            }
+
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                const previousInput = inputs[Math.max(currentIndex - 1, 0)];
+                if (previousInput) {
+                    focusAndSelect(previousInput);
+                }
+            }
+        });
+    });
+
+    actionButtons.forEach((button, index) => {
+        button.addEventListener('keydown', (event) => {
+            const buttons = getButtonSequence();
+            const currentIndex = buttons.indexOf(button);
+
+            if (event.key === 'Enter' && button.id === 'btn-check-bottom') {
+                event.preventDefault();
+                button.click();
+                return;
+            }
+
+            if (event.key === 'Enter' && button.id === 'btn-check') {
+                event.preventDefault();
+                return;
+            }
+
+            if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                const nextButton = buttons[Math.min(currentIndex + 1, buttons.length - 1)];
+                if (nextButton) {
+                    focusAndSelect(nextButton);
+                }
+                return;
+            }
+
+            if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                const previousButton = buttons[Math.max(currentIndex - 1, 0)];
+                if (previousButton) {
+                    focusAndSelect(previousButton);
+                }
+                return;
+            }
+
+            if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                const previousInput = inputs[inputs.length - 1];
+                if (previousInput) {
+                    focusAndSelect(previousInput);
+                }
+                return;
+            }
+
+            if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                const firstInput = inputs[0];
+                if (firstInput) {
+                    focusAndSelect(firstInput);
+                }
+            }
+        });
+    });
+
+    const topButtons = document.querySelectorAll('#btn-check, #btn-solve, #btn-reset');
+    const bottomButtons = document.querySelectorAll('#btn-check-bottom, #btn-solve-bottom, #btn-reset-bottom');
+
+    [...topButtons].forEach((button, index) => {
+        button.tabIndex = index + 1;
+    });
+    [...bottomButtons].forEach((button, index) => {
+        button.tabIndex = topButtons.length + index + 1;
+    });
 }
 
 function handleModeChange(changedInput) {

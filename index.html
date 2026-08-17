@@ -19,7 +19,13 @@
         .verb-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        .verb-input.active-focus {
+            border-color: #2980b9;
+            box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.28);
+            background-color: rgba(41, 128, 185, 0.06);
         }
         .verb-input.correct {
             border-color: #2ecc71;
@@ -44,7 +50,12 @@
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.1s ease;
+        }
+        .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.28);
+            transform: translateY(-1px);
         }
         .btn-check { background: #2ecc71; color: white; }
         .btn-check:hover { background: #28b86a; }
@@ -98,6 +109,14 @@
     </div>
 
     <div class="grid" id="conjugation-grid"></div>
+
+    <div class="trainer-controls">
+        <button id="btn-check-bottom" class="btn btn-check">Überprüfen</button>
+        <button id="btn-solve-bottom" class="btn btn-solve">Lösung anzeigen</button>
+        <button id="btn-reset-bottom" class="btn btn-reset">Zurücksetzen</button>
+    </div>
+
+    <button id="go-to-top-btn" class="go-to-top">↑ Nach oben</button>
 
     <script src="./js/verbs.js"></script>
     <script src="./js/test.js"></script>

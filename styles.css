@@ -134,6 +134,40 @@ select {
     box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     border-top: 4px solid var(--accent);
 }
+.go-to-top {
+    position: fixed;
+    bottom: 28px;
+    right: 24px;
+    width: 54px;
+    height: 54px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #2e86de;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(46, 134, 222, 0.35);
+    transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.go-to-top:hover,
+.go-to-top:focus {
+    background: #256fc3;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(37, 111, 195, 0.45);
+    outline: none;
+}
+.go-to-top.show {
+    opacity: 1;
+    pointer-events: auto;
+}
 table {
     width: 100%;
     border-collapse: collapse;
