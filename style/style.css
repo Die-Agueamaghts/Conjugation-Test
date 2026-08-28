@@ -618,6 +618,49 @@ table {
 .dark-mode .card table tr:hover {
   background: rgba(120, 185, 232, 0.12);
 }
+.verb-navigation {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.verb-navigation .btn {
+  min-width: 150px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+  pointer-events: auto;
+}
+}
+.btn-previous {
+  background: #607d8b;
+  color: #fff;
+}
+.btn-previous:hover {
+  background: #4f6975;
+}
+.dark-mode .btn-previous {
+  background: #527080;
+  color: #fff;
+}
+.dark-mode .btn-next {
+  background: #406f91;
+}
+@media (max-width: 520px) {
+  .verb-navigation {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+  .verb-navigation .btn {
+    min-width: 0;
+    padding: 10px 12px;
+  }
+}
 
 .landing-page {
   max-width: none;

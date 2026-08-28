@@ -20,6 +20,7 @@ function init() {
 
   verbSelect.addEventListener("change", (e) => {
     if (e.target.value) {
+      updateVerbNavigation();
       handleVerbChange(e.target.value);
     }
   });
@@ -32,8 +33,16 @@ function init() {
       });
     });
 
+  document
+    .getElementById("btn-previous-verb")
+    .addEventListener("click", showPreviousVerb);
+  document
+    .getElementById("btn-next-verb")
+    .addEventListener("click", showNextVerb);
+
   if (verbs.length > 0) {
     verbSelect.value = verbs[0].id;
+    updateVerbNavigation();
     handleVerbChange(verbs[0].id);
   }
 }
@@ -88,6 +97,44 @@ function createOption(verb) {
   option.value = verb.id;
   option.textContent = verb.label;
   return option;
+}
+
+function showPreviousVerb() {
+  navigateVerb(-1);
+}
+
+function showNextVerb() {
+  navigateVerb(1);
+}
+
+function navigateVerb(direction) {
+  const options = [...verbSelect.options];
+  if (options.length === 0) return;
+
+  const currentIndex = options.findIndex(
+    (option) => option.value === verbSelect.value,
+  );
+  const nextIndex =
+    (currentIndex + direction + options.length) % options.length;
+  verbSelect.value = options[nextIndex].value;
+  updateVerbNavigation();
+  handleVerbChange(options[nextIndex].value);
+}
+
+function updateVerbNavigation() {
+  const options = [...verbSelect.options];
+  const previousButton = document.getElementById("btn-previous-verb");
+  const nextButton = document.getElementById("btn-next-verb");
+  if (options.length === 0 || !previousButton || !nextButton) return;
+
+  const currentIndex = options.findIndex(
+    (option) => option.value === verbSelect.value,
+  );
+  const previousIndex = (currentIndex - 1 + options.length) % options.length;
+  const nextIndex = (currentIndex + 1) % options.length;
+
+  previousButton.textContent = `← ${options[previousIndex].textContent}`;
+  nextButton.textContent = `${options[nextIndex].textContent} →`;
 }
 
 function handleModeChange(changedInput) {
