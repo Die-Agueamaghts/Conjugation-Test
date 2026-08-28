@@ -576,7 +576,7 @@ function applyFilters() {
 
 function loadVerbData(verbId) {
   const fileName = verbId.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  const url = `./js/${fileName}.js`;
+  const url = `./data/${fileName}.js`;
   errorMsg.style.display = "none";
   grid.innerHTML = "";
   return fetch(url)
