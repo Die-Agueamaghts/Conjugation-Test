@@ -3,100 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Französisch Konjugations-Trainer</title>
+    <title>Parlez | Französisch lernen</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="style/style.css" />
   </head>
-  <body>
-    <header>
-      <div class="verb-heading">
-        <h1 id="verb-title">Französisch Konjugations-Trainer</h1>
-        <div
-          id="translation-icons"
-          class="translation-icons"
-          aria-label="Übersetzungen"
-        ></div>
-      </div>
-    </header>
+  <body class="landing-page">
+    <button
+      id="theme-toggle"
+      class="theme-toggle"
+      type="button"
+      aria-label="Nachtmodus aktivieren"
+      title="Nachtmodus aktivieren"
+    >
+      ☾
+    </button>
 
-    <div class="toolbar">
-      <label for="verb-select">Verb trainieren:</label>
-      <select id="verb-select" aria-label="Verb auswählen"></select>
-    </div>
+    <main class="landing-shell">
+      <header class="landing-header">
+        <p class="eyebrow">PARLEZ / CONJUGATION LAB</p>
+        <h1>Französische Verben, <em>endlich</em> im Gefühl.</h1>
+        <p class="landing-lead">
+          Trainiere Konjugationen mit Ruhe, Struktur und direktem Feedback.
+          Wähle deinen Weg und leg los.
+        </p>
+      </header>
 
-    <button id="theme-toggle" class="theme-toggle" type="button"></button>
+      <section class="path-grid" aria-label="Lernmodus auswählen">
+        <a class="path-card path-card-learn" href="learning.html">
+          <span class="path-number">01</span>
+          <span class="path-icon" aria-hidden="true">◌</span>
+          <h2>Lernen</h2>
+          <p>
+            Entdecke Formen und Zeitformen in deinem eigenen Tempo. Ideal zum
+            Nachschlagen und Wiederholen.
+          </p>
+          <span class="path-link"
+            >Zum Konjugator <span aria-hidden="true">→</span></span
+          >
+        </a>
+        <a class="path-card path-card-test" href="testing.html">
+          <span class="path-number">02</span>
+          <span class="path-icon" aria-hidden="true">✓</span>
+          <h2>Testen</h2>
+          <p>
+            Prüfe dein Wissen mit freien Eingaben, Sofortkorrektur und einer
+            Auswahl aus allen wichtigen Modi.
+          </p>
+          <span class="path-link"
+            >Zum Training <span aria-hidden="true">→</span></span
+          >
+        </a>
+      </section>
 
-    <details id="configuration-panel" class="configuration-panel" open>
-      <summary>Konfiguration</summary>
-      <div class="quickstart" aria-label="Modus-Auswahl">
-        <label class="mode-label mode-alle"
-          ><input type="checkbox" data-mode="alle" checked /> Alle</label
-        >
-        <label class="mode-label mode-indicatif"
-          ><input type="checkbox" data-mode="Indicatif" /> Indicatif</label
-        >
-        <label class="mode-label mode-subjonctif"
-          ><input type="checkbox" data-mode="Subjonctif" /> Subjonctif</label
-        >
-        <label class="mode-label mode-conditionnel"
-          ><input type="checkbox" data-mode="Conditionnel" />
-          Conditionnel</label
-        >
-        <label class="mode-label mode-imperatif"
-          ><input type="checkbox" data-mode="Impératif" /> Impératif</label
-        >
-        <label class="mode-label mode-participe"
-          ><input type="checkbox" data-mode="Participe" /> Participe</label
-        >
-      </div>
-      <div
-        class="subbuttons"
-        id="tense-buttons"
-        aria-label="Zeitform-Auswahl"
-      ></div>
-    </details>
+      <footer class="landing-footer">
+        <span>157 Verben</span>
+        <span aria-hidden="true">·</span>
+        <span>6 Modi</span>
+        <span aria-hidden="true">·</span>
+        <span>Dein Rhythmus</span>
+      </footer>
+    </main>
 
-    <div id="error-msg"></div>
+    <script>
+      const themeToggle = document.getElementById("theme-toggle");
+      const darkMode = localStorage.getItem("theme") === "dark";
 
-    <div class="info-row">
-      <div class="info-card">
-        <strong>Infinitif</strong>
-        <div id="verb-infinitiv">–</div>
-      </div>
-      <div class="info-card">
-        <strong>Auxiliaire</strong>
-        <div id="verb-auxiliaire">–</div>
-      </div>
-      <div class="info-card">
-        <strong>Groupe</strong>
-        <div id="verb-groupe">–</div>
-      </div>
-    </div>
+      function updateTheme(isDark) {
+        document.documentElement.classList.toggle("dark-mode", isDark);
+        themeToggle.textContent = isDark ? "☀" : "☾";
+        themeToggle.setAttribute(
+          "aria-label",
+          isDark ? "Hellen Modus aktivieren" : "Nachtmodus aktivieren",
+        );
+        themeToggle.title = isDark
+          ? "Hellen Modus aktivieren"
+          : "Nachtmodus aktivieren";
+      }
 
-    <div class="trainer-controls">
-      <button id="btn-check" class="btn btn-check">Überprüfen</button>
-      <button id="btn-solve" class="btn btn-solve">Lösung anzeigen</button>
-      <button id="btn-reset" class="btn btn-reset">Zurücksetzen</button>
-      <button id="btn-next-verb" class="btn btn-next">Nächstes Verb</button>
-    </div>
-
-    <div class="grid" id="conjugation-grid"></div>
-
-    <div class="trainer-controls">
-      <button id="btn-check-bottom" class="btn btn-check">Überprüfen</button>
-      <button id="btn-solve-bottom" class="btn btn-solve">
-        Lösung anzeigen
-      </button>
-      <button id="btn-reset-bottom" class="btn btn-reset">Zurücksetzen</button>
-      <button id="btn-next-verb-bottom" class="btn btn-next">
-        Nächstes Verb
-      </button>
-    </div>
-
-    <button id="go-to-top-btn" class="go-to-top">↑ Nach oben</button>
-
-    <script src="./app/verbs.js"></script>
-    <script src="./data/translations.js"></script>
-    <script src="./app/test.js"></script>
+      updateTheme(darkMode);
+      themeToggle.addEventListener("click", () => {
+        const isDark =
+          !document.documentElement.classList.contains("dark-mode");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        updateTheme(isDark);
+      });
+    </script>
   </body>
 </html>

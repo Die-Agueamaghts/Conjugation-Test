@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Französisch Verb-Konjugator</title>
+    <title>Französisch Konjugations-Trainer</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="style/style.css" />
   </head>
@@ -18,16 +18,16 @@
       >
       <a
         class="page-nav-link"
-        href="testing.html"
-        aria-label="Zum Testmodus"
-        title="Zum Testmodus"
-        >✓</a
+        href="learning.html"
+        aria-label="Zum Lernmodus"
+        title="Zum Lernmodus"
+        >◌</a
       >
     </nav>
 
     <header>
       <div class="verb-heading">
-        <h1 id="verb-title">Französisch Verb-Konjugator</h1>
+        <h1 id="verb-title">Französisch Konjugations-Trainer</h1>
         <div
           id="translation-icons"
           class="translation-icons"
@@ -37,7 +37,7 @@
     </header>
 
     <div class="toolbar">
-      <label for="verb-select">Verb wählen:</label>
+      <label for="verb-select">Verb trainieren:</label>
       <select id="verb-select" aria-label="Verb auswählen"></select>
     </div>
 
@@ -74,14 +74,6 @@
     </details>
 
     <div id="error-msg"></div>
-    <div
-      id="loading-indicator"
-      class="info-card"
-      style="display: none; text-align: center"
-    >
-      <strong>Lädt…</strong>
-      <div>Die Konjugation wird geladen, bitte warten.</div>
-    </div>
 
     <div class="info-row">
       <div class="info-card">
@@ -98,10 +90,30 @@
       </div>
     </div>
 
+    <div class="trainer-controls">
+      <button id="btn-check" class="btn btn-check">Überprüfen</button>
+      <button id="btn-solve" class="btn btn-solve">Lösung anzeigen</button>
+      <button id="btn-reset" class="btn btn-reset">Zurücksetzen</button>
+      <button id="btn-next-verb" class="btn btn-next">Nächstes Verb</button>
+    </div>
+
     <div class="grid" id="conjugation-grid"></div>
+
+    <div class="trainer-controls">
+      <button id="btn-check-bottom" class="btn btn-check">Überprüfen</button>
+      <button id="btn-solve-bottom" class="btn btn-solve">
+        Lösung anzeigen
+      </button>
+      <button id="btn-reset-bottom" class="btn btn-reset">Zurücksetzen</button>
+      <button id="btn-next-verb-bottom" class="btn btn-next">
+        Nächstes Verb
+      </button>
+    </div>
+
+    <button id="go-to-top-btn" class="go-to-top">↑ Nach oben</button>
 
     <script src="./app/verbs.js"></script>
     <script src="./data/translations.js"></script>
-    <script src="./app/main.js"></script>
+    <script src="./app/test.js"></script>
   </body>
 </html>
