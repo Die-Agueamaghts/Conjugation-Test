@@ -408,6 +408,9 @@ table {
 .card table .pronoun {
   letter-spacing: 0.02em;
 }
+.card table .verb-form {
+  color: var(--primary);
+}
 
 .card table .verb-form input {
   min-height: 34px;
@@ -600,7 +603,10 @@ table {
   color: #b8c5d1;
 }
 .dark-mode .card .pronoun {
-  color: #c2d0d8;
+  color: #c2d0d8 !important;
+}
+.dark-mode .card table .verb-form {
+  color: #e8edf2 !important;
 }
 .dark-mode .info-card strong {
   color: #78b9e8;

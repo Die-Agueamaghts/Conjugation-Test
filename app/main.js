@@ -418,9 +418,9 @@ function renderConjugation(data) {
         const pronoun = form.substring(0, splitIndex).trim();
         const verbForm = form.substring(splitIndex).trim();
         row.innerHTML = `
-                    <td class="pronoun" style="font-weight:600; width:35%; color:#7f8c8d;">${pronoun}</td>
-                    <td class="verb-form" style="font-weight:700; color:#2c3e50;">${verbForm}</td>
-                `;
+            <td class="pronoun" style="font-weight:600; width:35%;">${pronoun}</td>
+            <td class="verb-form" style="font-weight:700;">${verbForm}</td>
+          `;
         tbody.appendChild(row);
       });
       table.appendChild(tbody);
