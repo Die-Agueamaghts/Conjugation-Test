@@ -40,6 +40,8 @@ function init() {
     .getElementById("btn-next-verb")
     .addEventListener("click", showNextVerb);
 
+  bindGoToTopButton();
+
   if (verbs.length > 0) {
     verbSelect.value = verbs[0].id;
     updateVerbNavigation();
@@ -73,6 +75,23 @@ function updateThemeToggle(isDark) {
   themeToggle.title = isDark
     ? "Hellen Modus aktivieren"
     : "Nachtmodus aktivieren";
+}
+
+function bindGoToTopButton() {
+  const goToTopButton = document.getElementById("go-to-top-btn");
+  if (!goToTopButton) return;
+
+  const updateGoToTopVisibility = () => {
+    goToTopButton.classList.toggle("show", window.scrollY > 300);
+  };
+
+  window.addEventListener("scroll", updateGoToTopVisibility, {
+    passive: true,
+  });
+  goToTopButton.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  updateGoToTopVisibility();
 }
 
 function handleVerbChange(verbId) {

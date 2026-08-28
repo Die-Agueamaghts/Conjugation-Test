@@ -621,20 +621,20 @@ table {
 .verb-navigation {
   position: fixed;
   right: 20px;
-  bottom: 20px;
+  top: 50%;
   left: 20px;
   z-index: 90;
   display: flex;
   align-items: center;
   justify-content: space-between;
   pointer-events: none;
+  transform: translateY(-50%);
 }
 .verb-navigation .btn {
   min-width: 150px;
   border: 1px solid var(--border);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
   pointer-events: auto;
-}
 }
 .btn-previous {
   background: #607d8b;
@@ -653,7 +653,7 @@ table {
 @media (max-width: 520px) {
   .verb-navigation {
     right: 12px;
-    bottom: 12px;
+    top: 50%;
     left: 12px;
   }
   .verb-navigation .btn {
