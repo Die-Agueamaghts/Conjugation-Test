@@ -44,6 +44,15 @@ function init() {
   document
     .getElementById("btn-next-verb-bottom")
     .addEventListener("click", showNextVerb);
+  document
+    .querySelectorAll("#btn-next-verb, #btn-next-verb-bottom")
+    .forEach((button) => {
+      button.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+        showNextVerb();
+      });
+    });
 
   bindGoToTopButton();
 
@@ -158,6 +167,13 @@ function checkAnswers() {
       input.classList.add("wrong");
     }
   });
+
+  const nextVerbButton = document.getElementById("btn-next-verb");
+  if (nextVerbButton) {
+    setTimeout(() => {
+      nextVerbButton.focus({ preventScroll: true });
+    }, 0);
+  }
 }
 
 function showSolutions() {
