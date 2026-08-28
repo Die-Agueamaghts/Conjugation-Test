@@ -263,9 +263,7 @@ function renderConjugation(data) {
 
       forms.forEach((form) => {
         const row = document.createElement("tr");
-        const splitIndex = findPronounSplit(form);
-        const pronoun = form.substring(0, splitIndex).trim();
-        const verbForm = form.substring(splitIndex).trim();
+        const [pronoun, verbForm] = splitPronoun(form);
 
         row.innerHTML = `
                     <td class="pronoun" style="font-weight:600; width:35%; color:#7f8c8d; padding-left:14px;">${pronoun}</td>
@@ -671,11 +669,13 @@ function normalizeCssClass(text) {
     .replace(/^-+|-+$/g, "");
 }
 
-function findPronounSplit(form) {
-  const apostropheIndex = form.indexOf("'");
-  if (apostropheIndex > 0) return apostropheIndex + 1;
-  const firstSpace = form.indexOf(" ");
-  return firstSpace < 0 ? form.length : firstSpace;
+function splitPronoun(form) {
+  const match = form.match(
+    /^((?:que\s+)?j'|(?:que\s+)?qu'|(?:que\s+)?(?:je|tu|il|elle|on|nous|vous|ils|elles)(?=\s+|$))/i,
+  );
+  if (!match) return ["", form.trim()];
+
+  return [match[1], form.substring(match[0].length).trim()];
 }
 
 document.addEventListener("DOMContentLoaded", init);
