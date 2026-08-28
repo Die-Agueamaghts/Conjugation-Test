@@ -24,31 +24,35 @@
       <select id="verb-select" aria-label="Verb auswählen"></select>
     </div>
 
-    <div class="quickstart" aria-label="Modus-Auswahl">
-      <label class="mode-label mode-alle"
-        ><input type="checkbox" data-mode="alle" checked /> Alle</label
-      >
-      <label class="mode-label mode-indicatif"
-        ><input type="checkbox" data-mode="Indicatif" /> Indicatif</label
-      >
-      <label class="mode-label mode-subjonctif"
-        ><input type="checkbox" data-mode="Subjonctif" /> Subjonctif</label
-      >
-      <label class="mode-label mode-conditionnel"
-        ><input type="checkbox" data-mode="Conditionnel" /> Conditionnel</label
-      >
-      <label class="mode-label mode-imperatif"
-        ><input type="checkbox" data-mode="Impératif" /> Impératif</label
-      >
-      <label class="mode-label mode-participe"
-        ><input type="checkbox" data-mode="Participe" /> Participe</label
-      >
-    </div>
-    <div
-      class="subbuttons"
-      id="tense-buttons"
-      aria-label="Zeitform-Auswahl"
-    ></div>
+    <details id="configuration-panel" class="configuration-panel" open>
+      <summary>Konfiguration</summary>
+      <div class="quickstart" aria-label="Modus-Auswahl">
+        <label class="mode-label mode-alle"
+          ><input type="checkbox" data-mode="alle" checked /> Alle</label
+        >
+        <label class="mode-label mode-indicatif"
+          ><input type="checkbox" data-mode="Indicatif" /> Indicatif</label
+        >
+        <label class="mode-label mode-subjonctif"
+          ><input type="checkbox" data-mode="Subjonctif" /> Subjonctif</label
+        >
+        <label class="mode-label mode-conditionnel"
+          ><input type="checkbox" data-mode="Conditionnel" />
+          Conditionnel</label
+        >
+        <label class="mode-label mode-imperatif"
+          ><input type="checkbox" data-mode="Impératif" /> Impératif</label
+        >
+        <label class="mode-label mode-participe"
+          ><input type="checkbox" data-mode="Participe" /> Participe</label
+        >
+      </div>
+      <div
+        class="subbuttons"
+        id="tense-buttons"
+        aria-label="Zeitform-Auswahl"
+      ></div>
+    </details>
 
     <div id="error-msg"></div>
 

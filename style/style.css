@@ -95,6 +95,25 @@ h1 {
   flex-wrap: wrap;
   margin-bottom: 18px;
 }
+.configuration-panel {
+  margin-bottom: 16px;
+}
+.configuration-panel summary {
+  width: fit-content;
+  margin: 0 auto 12px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+.configuration-panel summary:hover,
+.configuration-panel summary:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+}
 .quickstart,
 .subbuttons {
   display: flex;
