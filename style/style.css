@@ -1,9 +1,17 @@
 :root {
+  color-scheme: light;
   --primary: #2c3e50;
   --accent: #3498db;
   --bg: #f8f9fa;
   --card-bg: #ffffff;
   --border: #dce3ea;
+}
+.dark-mode {
+  color-scheme: dark;
+  --primary: #e8edf2;
+  --bg: #18212b;
+  --card-bg: #202c38;
+  --border: #3a4a59;
 }
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -94,6 +102,51 @@ h1 {
   gap: 12px;
   flex-wrap: wrap;
   margin-bottom: 18px;
+}
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--primary);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  opacity: 0.92;
+  transition:
+    opacity 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.theme-toggle.is-scrolling {
+  opacity: 0.55;
+}
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: var(--accent);
+  opacity: 1;
+  outline: none;
+}
+.theme-toggle input {
+  display: none;
+}
+.dark-mode .theme-toggle {
+  background: #24313d;
+  color: #e8edf2;
+}
+.theme-toggle {
+  gap: 6px;
+  white-space: nowrap;
 }
 .configuration-panel {
   margin-bottom: 16px;
@@ -423,6 +476,93 @@ table {
   .info-row {
     grid-template-columns: 1fr;
   }
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+  }
+}
+
+.dark-mode .translation-icon,
+.dark-mode .configuration-panel summary,
+.dark-mode .quickstart label,
+.dark-mode .subbuttons label,
+.dark-mode select {
+  background: #24313d;
+  color: #e8edf2;
+}
+.dark-mode .info-card,
+.dark-mode .card {
+  background: var(--card-bg);
+  border-color: var(--border);
+}
+.dark-mode .card table {
+  background: #202c38;
+  border-color: #3a4a59;
+}
+.dark-mode .card table tr + tr td {
+  border-top-color: #3a4a59;
+}
+.dark-mode .tense-heading td {
+  color: #e8edf2;
+  background: #2a3947;
+  border-bottom-color: #3a4a59;
+}
+.dark-mode .card[data-mode="Indicatif"] {
+  background: #1c3445;
+}
+.dark-mode .card[data-mode="Subjonctif"] {
+  background: #342541;
+}
+.dark-mode .card[data-mode="Conditionnel"] {
+  background: #1c3b35;
+}
+.dark-mode .card[data-mode="Impératif"] {
+  background: #403323;
+}
+.dark-mode .card[data-mode="Participe"] {
+  background: #1c3b39;
+}
+.dark-mode input[type="text"],
+.dark-mode .verb-input {
+  background: #16202a;
+  color: #e8edf2;
+}
+.dark-mode .quickstart label:has(input[type="checkbox"]:checked),
+.dark-mode .subbuttons label:has(input[type="checkbox"]:checked) {
+  background: #31516b;
+  border-color: #78b9e8;
+  color: #ffffff;
+}
+.dark-mode .card[data-mode="Indicatif"] .tense-heading td {
+  background: #254b67;
+}
+.dark-mode .card[data-mode="Subjonctif"] .tense-heading td {
+  background: #4a3560;
+}
+.dark-mode .card[data-mode="Conditionnel"] .tense-heading td {
+  background: #28574e;
+}
+.dark-mode .card[data-mode="Impératif"] .tense-heading td {
+  background: #604c30;
+}
+.dark-mode .card[data-mode="Participe"] .tense-heading td {
+  background: #285950;
+}
+.dark-mode .subtitle {
+  color: #b8c5d1;
+}
+.dark-mode .solution-hint {
+  color: #8ee3a8;
+  background: rgba(46, 204, 113, 0.14);
+  border-left-color: #63d887;
+}
+.dark-mode .solution-hint.wrong {
+  color: #ff9d93;
+  background: rgba(231, 76, 60, 0.16);
+  border-left-color: #ff766b;
+}
+.dark-mode .card table tr:hover {
+  background: rgba(120, 185, 232, 0.12);
 }
 .verb-input {
   width: 100%;

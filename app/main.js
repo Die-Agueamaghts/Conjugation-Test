@@ -5,12 +5,15 @@ const errorMsg = document.getElementById("error-msg");
 const grid = document.getElementById("conjugation-grid");
 const tenseButtons = document.getElementById("tense-buttons");
 const loadingIndicator = document.getElementById("loading-indicator");
+const themeToggle = document.getElementById("theme-toggle");
 
 let currentVerbData = null;
 let selectedModeFilters = ["alle"];
 let selectedTenseFilters = ["alle"];
 
 function init() {
+  initTheme();
+
   verbs.forEach((verb) => {
     verbSelect.appendChild(createOption(verb));
   });
@@ -33,6 +36,34 @@ function init() {
     verbSelect.value = verbs[0].id;
     handleVerbChange(verbs[0].id);
   }
+}
+
+function initTheme() {
+  const darkMode = localStorage.getItem("theme") === "dark";
+  document.documentElement.classList.toggle("dark-mode", darkMode);
+  updateThemeToggle(darkMode);
+  themeToggle.addEventListener("click", () => {
+    const isDark = !document.documentElement.classList.contains("dark-mode");
+    document.documentElement.classList.toggle("dark-mode", isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    updateThemeToggle(isDark);
+  });
+  const updateScrollState = () => {
+    themeToggle.classList.toggle("is-scrolling", window.scrollY > 0);
+  };
+  window.addEventListener("scroll", updateScrollState, { passive: true });
+  updateScrollState();
+}
+
+function updateThemeToggle(isDark) {
+  themeToggle.textContent = isDark ? "☀" : "☾";
+  themeToggle.setAttribute(
+    "aria-label",
+    isDark ? "Hellen Modus aktivieren" : "Nachtmodus aktivieren",
+  );
+  themeToggle.title = isDark
+    ? "Hellen Modus aktivieren"
+    : "Nachtmodus aktivieren";
 }
 
 function handleVerbChange(verbId) {
